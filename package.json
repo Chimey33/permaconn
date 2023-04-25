@@ -8,6 +8,7 @@
     "start": "npm run start-backend & npm run start-frontend",
     "start-frontend": "npm start --prefix client",
     "start-backend": "npm start --prefix server",
-    "test": "npm run test --prefix client && npm run test --prefix server"
+    "test": "npm run test --prefix client && npm run test --prefix server",
+    "postinstall": "cd client && npm install & cd server && npm install"
   }
 }
