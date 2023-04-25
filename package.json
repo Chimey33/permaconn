@@ -1,0 +1,13 @@
+{
+  "name": "permaconn",
+  "version": "1.0.0",
+  "description": "Coding challenge for permaconn",
+  "author": "matt.belgre",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run start-backend & npm run start-frontend",
+    "start-frontend": "npm start --prefix client",
+    "start-backend": "npm start --prefix server",
+    "test": "npm run test --prefix client && npm run test --prefix server"
+  }
+}

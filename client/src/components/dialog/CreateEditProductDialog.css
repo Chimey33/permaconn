@@ -1,0 +1,31 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 24px 0 24px 0;
+}
+
+.input {
+    max-width: 400px;
+}
+
+@media screen and (max-width: 800px) {
+    .input {
+        max-width: unset;
+        width: 100%;
+    }
+}
+
+.pricing {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px
+}
+
+.form-button.form-button {
+    text-transform: none;
+}
+
+.error-helper.error-helper {
+    color: #d32f2f;
+}

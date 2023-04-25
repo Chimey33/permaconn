@@ -1,0 +1,25 @@
+.empty-state__container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 32px;
+    margin-bottom: 32px;
+}
+
+.empty-state__title.empty-state__title {
+    font-weight: bold;
+    color: #222222;
+    margin-bottom: 8px
+}
+
+.empty-state__icon {
+    margin-bottom: 16px;
+}
+
+.empty-state__no-data-primary-button {
+    margin-top: 24px;
+}
+
+.empty-state__filtered-primary-button {
+    margin-top: 16px;
+}

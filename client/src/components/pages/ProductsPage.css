@@ -1,0 +1,48 @@
+.products__container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.products__actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.search__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px
+}
+
+.button.button {
+    text-transform: none;
+    height: 56px
+}
+
+.search {
+    width: 400px;
+}
+
+@media screen and (max-width: 600px) {
+    .search {
+        width: 300px
+    }
+}
+
+.products {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+}
+
+.empty-state__icon.empty-state__icon {
+    height: 128px;
+    width: 128px;
+}
