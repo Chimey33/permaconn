@@ -36,6 +36,17 @@ export const assertTextBoxDisplayValue = (textFieldName: string | RegExp, displa
 };
 
 /**
+ * Performs assertion to ensure number texbox is available, then checks its display value...
+ * @param textFieldName the name of the textbox
+ * @param displayValue the value we expect to be displayed
+ */
+export const assertNumberTextBoxDisplayValue = (textFieldName: string | RegExp, displayValue: string | RegExp) => {
+    const textfield = screen.getByRole('spinbutton', { name: textFieldName });
+    expect(textfield).toBeVisible();
+    expect(textfield).toHaveDisplayValue(displayValue);
+};
+
+/**
  * Finds the text box and pastes text into a text box
  * replicate each keystroke.
  * @param labelText the label of the text box

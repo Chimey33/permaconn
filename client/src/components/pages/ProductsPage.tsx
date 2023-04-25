@@ -102,7 +102,7 @@ export const ProductsPage = (): JSX.Element => {
                 severity: 'success'
             })
         }).catch((error) => {
-            const message = <>Unable to create <strong>{product.title}</strong> - {error.message}</>
+            const message = <>{error.message}</>
             setNotification({
                 message,
                 severity: 'success'

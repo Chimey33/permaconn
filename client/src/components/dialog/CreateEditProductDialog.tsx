@@ -4,7 +4,8 @@ import {
     DialogActions,
     DialogContent,
     DialogTitle,
-    FormControl, FormHelperText,
+    FormControl,
+    FormHelperText,
     InputAdornment,
     InputLabel,
     MenuItem,
@@ -12,8 +13,8 @@ import {
     TextField
 } from '@mui/material';
 import Button from '@mui/material/Button';
-import { useFormik } from 'formik';
-import { Categories, Product, ProductValidationSchema } from '../../types/Product';
+import {useFormik} from 'formik';
+import {Categories, Product, ProductValidationSchema} from '../../types/Product';
 import './CreateEditProductDialog.css';
 
 /**
@@ -45,10 +46,17 @@ export interface CreateEditProductDialogProps {
 /**
  * Displays a dialog used for creating or editing a product
  */
-export const CreateEditProductDialog = ({dialogTitle, product, open, onCancel, onSubmit}: CreateEditProductDialogProps) => {
+export const CreateEditProductDialog = ({
+                                            dialogTitle,
+                                            product,
+                                            open,
+                                            onCancel,
+                                            onSubmit
+                                        }: CreateEditProductDialogProps) => {
     const formik = useFormik<Partial<Product>>({
         initialValues: {...product},
         validationSchema: ProductValidationSchema,
+        isInitialValid: !!product,
         onSubmit: (values) => {
             onSubmit(values);
             formik.resetForm();
@@ -69,7 +77,8 @@ export const CreateEditProductDialog = ({dialogTitle, product, open, onCancel, o
      */
     const onBlur = (event: React.FocusEvent<HTMLInputElement>) => {
         const {target: {name, value}} = event;
-        formik.setFieldValue(name, Number(value).toFixed(2));
+        formik.setFieldValue(name, !!value ? Number(value).toFixed(2) : undefined);
+        formik.handleBlur(event)
     }
 
     return (
@@ -84,6 +93,7 @@ export const CreateEditProductDialog = ({dialogTitle, product, open, onCancel, o
                             name={'title'}
                             label={'Title'}
                             value={formik.values.title || ''}
+                            onBlur={formik.handleBlur}
                             onChange={formik.handleChange}
                             error={!!formik.touched.title && Boolean(formik.errors.title)}
                             helperText={!!formik.touched.title && formik.errors.title as string}
@@ -95,6 +105,7 @@ export const CreateEditProductDialog = ({dialogTitle, product, open, onCancel, o
                             name={'description'}
                             label={'Description'}
                             value={formik.values.description || ''}
+                            onBlur={formik.handleBlur}
                             onChange={formik.handleChange}
                             error={!!formik.touched.description && Boolean(formik.errors.description)}
                             helperText={!!formik.touched.description && formik.errors.description as string}
@@ -109,18 +120,20 @@ export const CreateEditProductDialog = ({dialogTitle, product, open, onCancel, o
                                 name={'brand'}
                                 label={'Brand'}
                                 value={formik.values.brand || ''}
+                                onBlur={formik.handleBlur}
                                 onChange={formik.handleChange}
                                 error={!!formik.touched.brand && Boolean(formik.errors.brand)}
                                 helperText={!!formik.touched.brand && formik.errors.brand as string}
                                 classes={{root: 'input'}}
                             />
-                            <FormControl classes={{ root: 'input' }} fullWidth>
+                            <FormControl classes={{root: 'input'}} fullWidth>
                                 <InputLabel id={'category'}>Category</InputLabel>
                                 <Select
                                     id={'category'}
                                     name={'category'}
                                     value={formik.values.category || ''}
                                     label={'Category'}
+                                    onBlur={formik.handleBlur}
                                     onChange={formik.handleChange}
                                     classes={{select: 'input'}}
                                     error={!!formik.touched.category && Boolean(formik.errors.category)}
@@ -133,13 +146,15 @@ export const CreateEditProductDialog = ({dialogTitle, product, open, onCancel, o
                                         )
                                     })}
                                 </Select>
-                                {!!formik.touched.category &&<FormHelperText classes={{root: 'error-helper'}}>{formik.errors.category as string}</FormHelperText>}
+                                {!!formik.touched.category && <FormHelperText
+                                    classes={{root: 'error-helper'}}>{formik.errors.category as string}</FormHelperText>}
                             </FormControl>
                             <TextField
                                 fullWidth
                                 id={'rating'}
                                 name={'rating'}
                                 label={'Rating'}
+                                type={'number'}
                                 value={formik.values.rating || ''}
                                 onChange={formik.handleChange}
                                 error={!!formik.touched.rating && Boolean(formik.errors.rating)}
@@ -160,6 +175,7 @@ export const CreateEditProductDialog = ({dialogTitle, product, open, onCancel, o
                                 helperText={!!formik.touched.price && formik.errors.price as string}
                                 classes={{root: 'input'}}
                                 onBlur={onBlur}
+                                type={'number'}
                                 InputProps={{
                                     startAdornment: <InputAdornment position={'start'}>$</InputAdornment>,
                                 }}
@@ -171,11 +187,13 @@ export const CreateEditProductDialog = ({dialogTitle, product, open, onCancel, o
                                 label={'Discount percentage'}
                                 value={formik.values.discountPercentage || ''}
                                 onChange={formik.handleChange}
+                                error={!!formik.touched.discountPercentage && Boolean(formik.errors.discountPercentage)}
+                                helperText={!!formik.touched.discountPercentage && formik.errors.discountPercentage as string}
+                                type={'number'}
                                 classes={{root: 'input'}}
-                                onBlur={onBlur}
-                                InputProps={{
-                                    endAdornment: <InputAdornment position={'start'}>%</InputAdornment>,
-                                }}
+                                onBlur={onBlur} InputProps={{
+                                endAdornment: <InputAdornment position={'start'}>%</InputAdornment>,
+                            }}
                             />
                             <TextField
                                 fullWidth
@@ -183,7 +201,11 @@ export const CreateEditProductDialog = ({dialogTitle, product, open, onCancel, o
                                 name={'stock'}
                                 label={'Stock'}
                                 value={formik.values.stock || ''}
+                                onBlur={formik.handleBlur}
                                 onChange={formik.handleChange}
+                                type={'number'}
+                                error={!!formik.touched.stock && Boolean(formik.errors.stock)}
+                                helperText={!!formik.touched.stock && formik.errors.stock as string}
                                 classes={{root: 'input'}}
                             />
                         </div>
@@ -192,7 +214,7 @@ export const CreateEditProductDialog = ({dialogTitle, product, open, onCancel, o
                 <DialogActions>
                     <Button
                         onClick={onCancelSubmission}
-                        classes={{ root: 'form-button' }}
+                        classes={{root: 'form-button'}}
                         variant={'contained'}
                         size={'large'}
                     >
@@ -200,9 +222,10 @@ export const CreateEditProductDialog = ({dialogTitle, product, open, onCancel, o
                     </Button>
                     <Button
                         onClick={formik.submitForm}
-                        classes={{ root: 'form-button' }}
+                        classes={{root: 'form-button'}}
                         variant={'contained'}
                         size={'large'}
+                        disabled={!formik.isValid}
                     >
                         Confirm
                     </Button>

@@ -4,7 +4,11 @@ import '@testing-library/jest-dom/extend-expect';
 import { Product } from "../../types/Product";
 import { CreateEditProductDialog } from "./CreateEditProductDialog";
 import { buildProduct } from "../../utils/testUtils/testDataBuilder";
-import { assertTextBoxDisplayValue, clickButton } from "../../utils/testUtils/reactTestingLibraryUtils";
+import {
+    assertNumberTextBoxDisplayValue,
+    assertTextBoxDisplayValue,
+    clickButton
+} from "../../utils/testUtils/reactTestingLibraryUtils";
 
 const mockOnCancel = jest.fn();
 const mockOnSubmit = jest.fn();
@@ -42,10 +46,10 @@ describe('<CreateEditProductDialog />', () => {
            assertTextBoxDisplayValue(/title/i, '');
            assertTextBoxDisplayValue(/description/i, '');
            assertTextBoxDisplayValue(/brand/i, '');
-           assertTextBoxDisplayValue(/rating/i, '');
-           assertTextBoxDisplayValue(/price/i, '');
-           assertTextBoxDisplayValue(/discount percentage/i, '');
-           assertTextBoxDisplayValue(/stock/i, '');
+           assertNumberTextBoxDisplayValue(/rating/i, '');
+           assertNumberTextBoxDisplayValue(/price/i, '');
+           assertNumberTextBoxDisplayValue(/discount percentage/i, '');
+           assertNumberTextBoxDisplayValue(/stock/i, '');
        });
 
        test('should render with correct structure when product is provided', () => {
@@ -54,10 +58,10 @@ describe('<CreateEditProductDialog />', () => {
            assertTextBoxDisplayValue(/title/i, 'Test product');
            assertTextBoxDisplayValue(/description/i, 'A description');
            assertTextBoxDisplayValue(/brand/i, 'GloboCorp');
-           assertTextBoxDisplayValue(/rating/i, '4.22');
-           assertTextBoxDisplayValue(/price/i, '133.14');
-           assertTextBoxDisplayValue(/discount percentage/i, '14.28');
-           assertTextBoxDisplayValue(/stock/i, '10');
+           assertNumberTextBoxDisplayValue(/rating/i, '4.22');
+           assertNumberTextBoxDisplayValue(/price/i, '133.14');
+           assertNumberTextBoxDisplayValue(/discount percentage/i, '14.28');
+           assertNumberTextBoxDisplayValue(/stock/i, '10');
        });
 
        test('should render with correct structure when dialog closed', () => {

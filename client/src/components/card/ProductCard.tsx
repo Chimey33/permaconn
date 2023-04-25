@@ -29,16 +29,6 @@ export interface ProductCardProps {
     onRequestCompletion: (message: React.ReactNode, severity: 'success' | 'error') => void;
 }
 
-const mapErrors = (error: AxiosError) => {
-    return <>
-        {/*{error.response?.data?.errors?.map(() => {*/}
-        {/*    return (*/}
-        {/*    <></>*/}
-        {/*    )*/}
-        {/*})}*/}
-            </>
-}
-
 /**
  * Displays the details for an individual product and facilitates product editing
  */
@@ -51,8 +41,8 @@ export const ProductCard = ({product, onRequestCompletion}: ProductCardProps) =>
      */
     const onEditProduct = useCallback((product: Partial<Product>) => {
         const validatedProduct: Product = Object.assign(product);
-        updateProduct(validatedProduct).then((res) => {
-            const message =  <><strong>{res.data.title}</strong> successfully edited!</>
+        updateProduct(validatedProduct).then(() => {
+            const message =  <><strong>{product.title}</strong> successfully edited!</>
             onRequestCompletion(message, 'success');
         }).catch((error) => {
             const message =  <>{error.message}</>
