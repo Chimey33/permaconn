@@ -1,6 +1,14 @@
 import app from "../server";
 import request from "supertest";
 
+jest.mock('axios', () => {
+    return {
+        get: jest.fn().mockImplementation(() => Promise.resolve({ data: [] })),
+        post: jest.fn().mockImplementation(() => Promise.resolve({ data: [] })),
+        put: jest.fn().mockImplementation(() => Promise.resolve({ data: [] })),
+    }
+});
+
 describe("route request validation",  () => {
     describe("GET /product", () => {
         test("should respond with 200 when request is successful", async () => {

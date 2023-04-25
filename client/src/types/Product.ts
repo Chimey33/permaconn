@@ -113,18 +113,26 @@ export const ProductValidationSchema = yup.object({
         .required('Description is required'),
     price: yup
         .number()
+        .min(0, 'Price should be greater than or equal to 0')
         .required('Price is required'),
+    discountPercentage: yup
+        .number()
+        .min(0, 'Discount percentage should be greater than or equal to 0')
+        .max(100, 'Discount percentage should be less than or equal to 100')
+        .required('Discount percentage is required'),
     rating: yup
         .number()
-        .min(0, 'Rating should be greater than or equal to zero')
-        .max(5, 'Rating should be less than or equal to five'),
+        .min(0, 'Rating should be greater than or equal to 0')
+        .max(5, 'Rating should be less than or equal to 5')
+        .required('Rating is required'),
     stock: yup
         .number()
         .integer()
-        .min(0, 'Rating should be greater than or equal to zero'),
+        .min(0, 'Stock should be greater than or equal to 0')
+        .required('Stock is required'),
     category: yup
         .string()
-        .required('Category is required'),
+        .required('Category is required')
 });
 
 /**
